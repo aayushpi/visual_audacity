@@ -28,6 +28,44 @@
 	add_theme_support('post-thumbnails');
 	
 	// register_nav_menus(array('primary' => 'Primary Navigation'));
+
+/* ========================================================================================================================
+  Kollage Function
+/* =======================================================================================================================*/
+	
+	
+	function get_kollage() {
+    $valuation = get_the_ID();
+    $post_class = get_post_meta( $valuation, 'smashing_post_class', true );
+
+    $images = get_children(
+	   array(
+	       'order'          => 'ASC',
+	       'orderby'		 => 'menu_order ID',
+	       'post_parent'    => get_the_ID(),
+	       'post_type'      => 'attachment',
+	       'numberposts'    => -1, // show all
+	       'post_status'    => null,
+	       'post_mime_type' => 'image',
+	   )
+    );
+    
+    if ( $images ) {
+		$id_count = 1;
+		foreach( $images as $image ) {
+			$imgtag   = wp_get_attachment_image($image->ID,'medium');		
+			$atturl   = wp_get_attachment_url($image->ID);
+			echo '<div data-original="'.$atturl.'" id="'.$id_count.'" class="image">';
+			echo '<a href="'.$post_class.'">'.$imgtag.'</a>';
+			echo '</div>';
+			$id_count++;			
+		}		
+	}
+}
+/* ========================================================================================================================
+  Custom Post Type
+/* =======================================================================================================================*/
+
 	
 	
 	//Custom Post Type Start
