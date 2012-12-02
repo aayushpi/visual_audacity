@@ -14,7 +14,7 @@
  */
 ?>
 <?php get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
-
+<h2><a href="./add-a-mixtape/">Add a Mixtape</a>
 <?php 
 $args = array( 'post_type' => 'mix_tape' );
 $loop = new WP_Query( $args );            

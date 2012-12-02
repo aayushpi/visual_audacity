@@ -36,7 +36,7 @@
 	
 	function get_kollage() {
     $valuation = get_the_ID();
-    $post_class = get_post_meta( $valuation, 'smashing_post_class', true );
+    $post_class = get_post_meta( $valuation, 'spotify_code_class', true );
 
     $images = get_children(
 	   array(
@@ -89,26 +89,26 @@ function create_post_type() {
   	Custom Box for Spotify Code
 	/* ========================================================================================================================
   /* Fire our meta box setup function on the post editor screen. */
-  add_action( 'load-post.php', 'smashing_post_meta_boxes_setup' );
-  add_action( 'load-post-new.php', 'smashing_post_meta_boxes_setup' );
-
+  add_action( 'load-post.php', 'spotify_code_setup' );
+  add_action( 'load-post-new.php', 'spotify_code_setup' );
+  
   /* Meta box setup function. */
-  function smashing_post_meta_boxes_setup() {
+  function spotify_code_setup() {
 
 	/* Add meta boxes on the 'add_meta_boxes' hook. */
-	add_action( 'add_meta_boxes', 'smashing_add_post_meta_boxes' );
+	add_action( 'add_meta_boxes', 'spotify_code_meta_boxes' );
 
 	/* Save post meta on the 'save_post' hook. */
-	add_action( 'save_post', 'smashing_save_post_class_meta', 10, 2 );
+	add_action( 'save_post', 'spotify_code_class_meta', 10, 2 );
 	}
 
 /* Create one or more meta boxes to be displayed on the post editor screen. */
-function smashing_add_post_meta_boxes() {
+function spotify_code_meta_boxes() {
 
 	add_meta_box(
-		'smashing-post-class',			// Unique ID
+		'spotify-code-class',			// Unique ID
 		esc_html__( 'Post Class', 'example' ),		// Title
-		'smashing_post_class_meta_box',		// Callback function
+		'spotify_code_meta_box',		// Callback function
 		'post',					// Admin page (or post type)
 		'side',					// Context
 		'default'					// Priority
@@ -116,10 +116,10 @@ function smashing_add_post_meta_boxes() {
 }
 
 /* Save the meta box's post metadata. */
-function smashing_save_post_class_meta( $post_id, $post ) {
+function spotify_code_class_meta( $post_id, $post ) {
 
 	/* Verify the nonce before proceeding. */
-	if ( !isset( $_POST['smashing_post_class_nonce'] ) || !wp_verify_nonce( $_POST['smashing_post_class_nonce'], basename( __FILE__ ) ) )
+	if ( !isset( $_POST['spotify_code_class_nonce'] ) || !wp_verify_nonce( $_POST['spotify_code_class_nonce'], basename( __FILE__ ) ) )
 		return $post_id;
 
 	/* Get the post type object. */
@@ -130,11 +130,11 @@ function smashing_save_post_class_meta( $post_id, $post ) {
 		return $post_id;
 
 	/* Get the posted data and sanitize it for use as an HTML class. */
-//	$new_meta_value = ( isset( $_POST['smashing-post-class'] ) ? sanitize_html_class( $_POST['smashing-post-class'] ) : '' );
-    $new_meta_value = ( $_POST['smashing-post-class'] );
+//	$new_meta_value = ( isset( $_POST['spotify-code-class'] ) ? sanitize_html_class( $_POST['spotify-code-class'] ) : '' );
+    $new_meta_value = ( $_POST['spotify-code-class'] );
 
 	/* Get the meta key. */
-	$meta_key = 'smashing_post_class';
+	$meta_key = 'spotify_code_class';
 
 	/* Get the meta value of the custom field key. */
 	$meta_value = get_post_meta( $post_id, $meta_key, true );
@@ -155,14 +155,14 @@ function smashing_save_post_class_meta( $post_id, $post ) {
 
 
 /* Display the post meta box. */
-function smashing_post_class_meta_box( $object, $box ) { ?>
+function spotify_code_meta_box( $object, $box ) { ?>
 
-	<?php wp_nonce_field( basename( __FILE__ ), 'smashing_post_class_nonce' ); ?>
+	<?php wp_nonce_field( basename( __FILE__ ), 'spotify_code_class_nonce' ); ?>
 
 	<p>
-		<label for="smashing-post-class"><?php _e( "Add a custom CSS class, which will be applied to WordPress' post class.", 'example' ); ?></label>
+		<label for="spotify-code-class"><?php _e( "Add a custom CSS class, which will be applied to WordPress' post class.", 'example' ); ?></label>
 		<br />
-		<input class="widefat" type="text" name="smashing-post-class" id="smashing-post-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'smashing_post_class', true ) ); ?>" size="30" />
+		<input class="widefat" type="text" name="spotify-code-class" id="spotify-code-class" value="<?php echo esc_attr( get_post_meta( $object->ID, 'spotify_code_class', true ) ); ?>" size="30" />
 	</p>
 <?php }
 
