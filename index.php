@@ -30,7 +30,8 @@ if ($loop->have_posts() ): ?>
 ?>
 	<li>
 			<h2><a href="<?php esc_url( the_permalink() ); ?>" title="Permalink to <?php the_title(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-    <a href="<?php echo $post_class; ?>"><img src="<?php echo $post_class_2; ?>"/></a>
+    <a href="<?php echo $post_class; ?>"><img src="<?php echo $post_class_2; ?>/media/?size=l"/></a>
+    <iframe src="https://embed.spotify.com/?uri=<?php echo $post_class; ?>"width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 	</li>
 <?php endwhile; ?>
 </ul>
