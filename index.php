@@ -21,13 +21,19 @@ $loop = new WP_Query( $args );
 
 if ($loop->have_posts() ): ?>
 <ul id="baraja-el" class="baraja-container">
-<?php while ( $loop->have_posts() ) : $loop->the_post(); ?>
+<?php while ( $loop->have_posts() ) : $loop->the_post(); 
+  
+    $valuation = get_the_ID();
+    $post_class = get_post_meta( $valuation, 'spotify_code_class', true );
+    $post_class_2 = get_post_meta( $valuation, 'album_art_class', true );
+
+?>
 	<li>
 			<h2><a href="<?php esc_url( the_permalink() ); ?>" title="Permalink to <?php the_title(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-			 <?php get_kollage(); ?>
+    <a href="<?php echo $post_class; ?>"><img src="<?php echo $post_class_2; ?>"/></a>
 	</li>
 <?php endwhile; ?>
-</ol>
+</ul>
 <?php else: ?>
 <h2>No posts to display</h2>
 <?php endif; ?>
