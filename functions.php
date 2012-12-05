@@ -319,3 +319,14 @@ function album_art_meta_box( $object, $box ) { ?>
 			</article>
 		<?php endif;
 	}
+	
+	
+	/* =====================================
+	
+	Autopost thingy =======================
+	=====================================*/
+	function auto_post( $wpcf7 ){
+  	
+	}
+	
+	add_action( 'wpcf7_before_send_mail', 'auto_post' );
