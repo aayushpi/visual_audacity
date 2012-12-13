@@ -14,27 +14,48 @@
  */
 ?>
 <?php get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
-<h2><a href="./add-a-mixtape/">Add a Mixtape</a>
+<h1 id="logo"><?php bloginfo('name'); ?></h1>
+
 <?php 
 $args = array( 'post_type' => 'mix_tape' );
 $loop = new WP_Query( $args );            
 
-if ($loop->have_posts() ): ?>
-<ul id="baraja-el" class="baraja-container">
+if ($loop->have_posts() ): 
+$imgcount = 1;?>
+<img id="add" src="<?php bloginfo('template_url'); ?>/assets/add-new.png"/>
+  <div id="overlay">
+    <div>
+      <header>
+        <div id="close">CLOSE</div>
+        <h2>Title</h2>
+      </header>
+      <img src="http://placehold.it/300x300"/>
+      <iframe src="https://embed.spotify.com/?uri=spotify:user:1242949767:playlist:0hEb75cTIysQliH1AOpJUI" width="300" height="330" frameborder="0" allowtransparency="true"></iframe>
+    </div>
+  </div>
+  
+    <div id="plus">
+    <div>
+          <div id="close2">CLOSE</div>
+      <?php gravity_form(1, false, false, false, '', true, 12); ?>
+    </div>
+  </div>
+
+
+<div id="container">
 <?php while ( $loop->have_posts() ) : $loop->the_post(); 
   
     $valuation = get_the_ID();
     $post_class = get_post_meta( $valuation, 'spotify_code_class', true );
     $post_class_2 = get_post_meta( $valuation, 'album_art_class', true );
-
+    $random = (rand(1,3));
 ?>
-	<li>
-			<h2><a href="<?php esc_url( the_permalink() ); ?>" title="Permalink to <?php the_title(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
-    <a href="<?php echo $post_class; ?>"><img src="<?php echo $post_class_2; ?>/media/?size=l"/></a>
-    <iframe src="https://embed.spotify.com/?uri=<?php echo $post_class; ?>"width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-	</li>
-<?php endwhile; ?>
-</ul>
+	<div class="item">
+  	<h2><?php the_title(); ?></h2>
+  	<div class="audacity"> </div>
+    <a data-title="<?php the_title(); ?>" data-code="<?php echo $post_class;?>"><img src="<?php echo $post_class_2; ?>/media/?size=m" class="pickme image<?php echo $random ?>"/></a>
+	</div><?php endwhile; ?>
+</div>
 <?php else: ?>
 <h2>No posts to display</h2>
 <?php endif; ?>
